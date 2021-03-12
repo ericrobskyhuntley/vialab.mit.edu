@@ -152,13 +152,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'node_modules', 'academicons'),
 )
 
-
-# MARKDOWNX_MARKDOWN_EXTENSIONS = [
-#     'markdown.extensions.extra',
-#     'markdown.extensions.codehilite',
-# ]
-
-
 # Global martor settings
 # Input: string boolean, `true/false`
 MARTOR_ENABLE_CONFIGS = {
