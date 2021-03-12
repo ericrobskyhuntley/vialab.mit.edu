@@ -16,6 +16,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
+# Load Zotero key, necessary for reading lists
 ZOTERO_KEY = os.getenv('ZOTERO')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
