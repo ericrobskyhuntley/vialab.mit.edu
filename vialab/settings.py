@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import time
 import os
+# Load environment variables from .env file
 from dotenv import load_dotenv
 load_dotenv()
 
