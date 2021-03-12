@@ -14,10 +14,15 @@ html, body {
     overflow: hidden;
     position: fixed;
 }
+
+#video {
+    z-index:0;
+}
   
 #gradient {
     background: linear-gradient(290deg, rgb(216, 16, 126), rgb(57, 186, 150));
-    z-index: 0;
+    z-index: 2;
+    mix-blend-mode:multiply;
 }
 
 #p5 {

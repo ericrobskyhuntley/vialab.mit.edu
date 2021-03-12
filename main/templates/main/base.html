@@ -91,8 +91,12 @@
     <div id="content-col">
       {% block content %}{% endblock %}
     </div>
-    <div class="background" id="p5"></div>
     <div class="background" id="gradient"></div>
+    <div class="background" id="video">
+      <video muted="1" loop="1" autoplay="1" width="1920" height="1080">
+        <source type="video/mp4" src="{{site_data.feature_vid.url}}"
+      </video>
+    </div>
 </body>
 {% block js %}{% endblock %}
 <script src="{% static 'index.bundle.js' %}"></script>
