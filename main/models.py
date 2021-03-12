@@ -4,7 +4,7 @@ from simple_history.models import HistoricalRecords
 from people.models import Person, Institution
 
 def vid_filename(instance, filename):
-    path = 'videos/feature'
+    path = 'videos'
     fname, fext = os.path.splitext(filename)
     f = 'feature_' + str(round(time.time())) + fext
     return os.path.join(path, f)
