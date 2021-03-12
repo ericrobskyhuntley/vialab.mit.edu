@@ -149,6 +149,7 @@ MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'node_modules', '@fortawesome', 'fontawesome-free'),
+    os.path.join(BASE_DIR, 'node_modules', 'academicons'),
 )
 
 
