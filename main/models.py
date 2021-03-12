@@ -3,7 +3,11 @@ from martor.models import MartorField
 from simple_history.models import HistoricalRecords
 from people.models import Person, Institution
 
-# Create your models here.
+def vid_filename(instance, filename):
+    path = 'videos/feature'
+    fname, fext = os.path.splitext(filename)
+    f = 'feature_' + str(round(time.time())) + fext
+    return os.path.join(path, f)
 
 class MainMetadata(models.Model):
     main_name = models.CharField(max_length=50, blank=False)
@@ -17,6 +21,7 @@ class MainMetadata(models.Model):
     gitlab = models.CharField(max_length=25, blank=True, default='')
     github = models.CharField(max_length=25, blank=True, default='')
     zotero = models.CharField(max_length=25, blank=True, default='')
+    feature_vid = models.FileField(blank=True, default='', upload_to = vid_filename)
     colophon_name = models.CharField(max_length=25, null=True, blank=True, default='')
     colophon = MartorField(max_length=12000, null=True, blank=True, default='')
     linkedin = models.CharField(max_length=25, blank=True, default='')
