@@ -1,0 +1,99 @@
+
+{% load martortags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if site_data %}{{site_data.main_name}}{% else %}VIA Learning Lab{% endif %}—MIT DUSP</title>
+    <!-- Add additional CSS in static file -->
+    {% load static %}
+    {% comment %} FontAwesome {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/all.css' %}">
+    {% comment %} AcademicIcons {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/academicons.min.css' %}">
+    {% comment %} Load Google Fonts. {% endcomment %}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    {% comment %} Custon Styles {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div id="navbar">
+        <div id="logo-box" class="navclass">
+        <a href="{% url 'main:landing'%}">
+          <span id="logo" style="display: block;">
+          {% comment %} <div id="logo" class="hide-medium hawt"> {% endcomment %}
+            <object id="logo-svg" type="image/svg+xml" data="{% static 'logos/vialab-logo_white.svg' %}" style="pointer-events: none;">
+                Logo
+            </object>
+          {% comment %} </div> {% endcomment %}
+          </span>
+          <div class="small-hide">
+          <a href="{% url 'main:landing'%}"><h3 id="global-title">{% if site_data %}{{site_data.main_name}}{% else %}VIA Learning Lab{% endif %}</h3></a>
+          <h4 id="global-subtitle">Visualization, Inquiry, Analysis</h4>
+          </div>
+          </a>
+        </div>
+        <div id="nav-box" class="navclass">
+          <div class="card-segment">
+          <div id="toggle-nav">
+            <i class="fa fa-bars fa-lg"></i>
+          </div>
+            <nav>
+              <ul id="navlist">
+                  <li><a href="{% url 'tutorials:modules' %}">Tutorials</a></li>
+                  <li><a href="{% url 'cal:calendar' %}">Calendar</a></li>
+                  <li><a href="{% url 'classes:classes' %}">Classes</a></li>
+                  <hr>
+                  <li><a href="{% url 'main:about'%}" >About</a></li>
+                  <li><a href="{% url 'main:contact'%}">Contact</a></li>
+                  <li><a href="{% url 'main:colophon'%}">Colophon</a></li>
+                  {% comment %} <hr class="small-hide"> {% endcomment %}
+                  {% comment %} <a href="https://www.mit.edu" class="small-hide"><object type="image/svg+xml" data="{% static 'logos/mit-logo.svg' %}" class="mitlogo">
+                      MIT Logo <!-- fallback image in CSS -->
+                  </object></a> {% endcomment %}
+              </ul>
+            </nav>
+            </div>
+        </div>
+        <div id="contact" class="hide-medium small-hide" id="title-card">
+          <div class="card-segment">
+            <div id="linkicons" class="hide-medium">
+              {% if site_data.github %}
+                <span class="icon"><a href="https://twitter.com/{{ site_data.twitter }}"><i class="fab fa-twitter fa-md"></i></a></span>
+              {% endif %}
+              {% if site_data.github %}
+                <span class="icon"><a href="https://gitlab.com/{{ site_data.gitlab }}"><i class="fab fa-gitlab fa-md"></i></a></span>
+              {% endif %}
+              {% if site_data.github %}
+                <span class="icon"><a href="https://github.com/{{ site_data.github }}"><i class="fab fa-github fa-md"></i></a></span>
+              {% endif %}
+              {% if site_data.github %}
+                <span class="icon"><a href="http://zotero.com/{{ site_data.zotero }}"><i class="ai ai-zotero ai-md"></i></a></span>
+              {% endif %}
+              {% if site_data.github %}
+                <span class="icon"><a href="https://linkedin.com{{site_data.linkedin}}"><i class="fab fa-linkedin fa-md"></i></a></span>
+              {% endif %}
+            </div>
+            {% if site_data.institution %}
+            <hr>
+              {% if site_data.institution.dept %}<a href="{{ site_data.institution.dept_website }}"><h3>{{site_data.institution.dept}}</h3></a>{% endif %}
+              {% if site_data.institution.inst %}<a href="{{ site_data.institution.inst_website }}"><h4>{{site_data.institution.inst}}</h4></a>{% endif %}
+              {% if site_data.address %}
+                <h4>{{ site_data.address|safe_markdown }}</h4>
+              {% endif %}
+              {% if site_data.email %}<a href="mailto:{{site_data.email}}"><h4><code>{{site_data.email}}</code></h4></a>{% endif %}
+            {% endif %}
+          </div>
+        </div>
+    </div>
+    <div id="content-col">
+      {% block content %}{% endblock %}
+    </div>
+    <div class="background" id="p5"></div>
+    <div class="background" id="gradient"></div>
+</body>
+{% block js %}{% endblock %}
+<script src="{% static 'index.bundle.js' %}"></script>
+</html>

@@ -1,0 +1,29 @@
+{% load el_pagination_tags %}
+{% load martortags %}
+
+
+
+{% paginate modules.qs as modules %}
+{% for m in modules %}<div class="card {% if m.cancel %}cancel{% endif %}">
+<div class="card-segment">
+    {% if m.banner %}
+        <a href="{% url 'tutorials:module' m.slug %}"><div class="card-img"><div style="background-image:url({{m.banner.url}})"></div></div></a>
+    {% endif %}
+    <h2 class="card-segment-head"><a href="{% url 'tutorials:module' m.slug %}">{{m.title}}</a></h2>
+    {% if m.software %}
+        {% for soft in m.software.all %} <code>{{soft.name}}</code> {% endfor %}
+    {% endif %} | {% if m.skills %}
+        {% for skill in m.skills.all %} <code>{{skill.name}}</code> {% endfor %}
+    {% endif %}
+    <hr>
+    {% for a in m.author.all %}
+        <h4><a href="{% url 'people:person' a.slug %}">{{a.full_name}}</a></h4>
+    {% endfor %}
+    {% if m.desc %}
+        {{ m.desc|safe_markdown|truncatewords:15 }}
+    {% elif m.body %}
+        {{ m.body|safe_markdown|truncatewords:15 }}
+    {% endif %}
+</div>
+</div>{% endfor %}
+{% show_more %}

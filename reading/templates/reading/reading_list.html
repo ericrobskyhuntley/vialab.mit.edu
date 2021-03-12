@@ -1,0 +1,35 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+
+<div class="row section">
+<div class="col-md-12">
+<h1>{{reading_list.title}}</h1>
+
+<p>{{reading_list.desc}}</p>
+
+{% for key, value in reading_list.list_html.items %}
+    <div>
+    {% for ref in value %}
+        <div>{{ref|safe}}</div>
+    {% endfor %}
+        {% comment %} {% for sub_key, sub_value in value.items %}
+            {% if value|length == 1 %}
+                {% for ref in sub_value %}
+                    <div>{{ref|safe}}</div>
+                {% endfor %}
+            {% else %}
+                <h3>{{sub_key}}</h3>
+                {% for ref in sub_value.contents %}
+                    <div>{{ref|safe}}</div>
+                {% endfor %}
+            {% endif %}
+        {% endfor %} {% endcomment %}
+    </div>
+{% endfor %}
+</div>
+</div>
+
+
+
+{% endblock %}

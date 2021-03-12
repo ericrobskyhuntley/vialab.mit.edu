@@ -1,0 +1,56 @@
+{% extends "main/base.html" %}
+{% load martortags %}
+{% load static %}
+
+{% block content %}
+<div class="feature-text"><p>Upcoming Events</p></div>
+<div class="card-array"> 
+    {% include page_template %}
+</div>
+{% comment %} {% if event_list %}
+<div class="feature-text"><p>Previous Events</p></div>
+<div class="card-array">
+    {% for e in event_list %}<div class="sidebyside card hawt {% if e.cancel %}cancel{% endif %}">
+        <div class="card-segment">
+            {% if e.banner %}
+                <a href="{% url 'cal:event_detail' e.slug %}"><div class="card-img"><div style="background-image:url({{e.banner.url}})"></div></div></a>
+            {% elif e.module.banner.url %}
+                <a href="{% url 'cal:event_detail' e.slug %}"><div class="card-img"><div style="background-image:url({{e.module.banner.url}})"></div></div></a>
+            {% endif %}
+            <h2 class="card-segment-head"><a href="{% url 'cal:event_detail' e.slug %}">{{e.title}}</a></h2>
+            {% if e.day %}
+                <h4>
+                {{e.day | date:"D M j" }}{% if e.start %}, {{e.start | time:"g:i"}}{% if e.end %}–{{e.end | time:"g:i"}}{% endif %}{% endif %}
+                </h4>
+            {% endif %}
+            <hr>
+            <div class="card-segment-body">
+            {{ e.desc|truncatewords:30|safe_markdown }}
+                <div class="card-button-list">
+                    <ul>
+                        {% if e.module %}
+                            <a href="{{ e.module }}"><li>Tutorial ></li></a>
+                        {% endif %}
+                        {% if e.virtual_url %}
+                            <a href="{{ e.virtual_url }}"><li>Zoom ></li></a>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>{% endfor %}
+</div>
+{% endif %} {% endcomment %}
+{% endblock content %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="{% static 'el-pagination/js/el-pagination.js'%}"></script>
+    <script>
+        $.endlessPaginate({
+            paginateOnScroll: true,
+            paginateOnScrollMargin: 200
+        });
+    </script>
+{% endblock %}

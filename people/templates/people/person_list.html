@@ -1,0 +1,55 @@
+{% extends "main/base.html" %}
+{% load martortags %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            {% for person in people %}
+                {% if person.title == 'D' %}
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card">
+                            <a href="{% url 'people:person' person.id %}"><img class="card-img-top" src="{{person.photo.url}}" alt="Card image cap"></a>
+                            <div class="card-body">
+                                <a href="{% url 'people:person' person.id %}"><h5 class="card-title">{{person.full_name}}{% if person.terminal_degree %}, {{person.terminal_degree}}{% endif %}</h5></a>
+                                <h6 class="card-subtitle">{{person.get_title_display}}</h6>
+                                <code><a href="mailto:{{person.email}}">{{person.email}}</a></code>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            {% for person in people %}
+                {% if person.title == 'A' %}
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card">
+                            <a href="{% url 'people:person' person.id %}"><img class="card-img-top" src="{{person.photo.url}}" alt="Card image cap"></a>
+                            <div class="card-body">
+                                <a href="{% url 'people:person' person.id %}"><h5 class="card-title">{{person.full_name}}{% if person.terminal_degree %}, {{person.terminal_degree}}{% endif %}</h5></a>
+                                <h6 class="card-subtitle">{{person.get_title_display}}</h6>
+                                <code><a href="mailto:{{person.email}}">{{person.email}}</a></code>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            {% for person in people %}
+                {% if person.title == 'R' %}
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card">
+                            <img class="card-img-top" src="{{dir.photo.url}}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">{{dir.full_name}}</h5>
+                                <h6 class="card-title">{{dir.get_title_display}}</h6>
+                                <code><a href="mailto:{{dir.email}}">{{dir.email}}</a></code>
+                                {% comment %} <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a> {% endcomment %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

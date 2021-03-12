@@ -1,0 +1,14 @@
+.env
+.vscode/
+venv/
+*.ipynb
+*.sqlite3
+*/static/
+__pycache__/
+.DS_Store
+node_modules/
+media/
+static/
+.DS_Store
+._urls.py
+._views.py

@@ -1,0 +1,97 @@
+{% extends "main/base.html" %}
+
+{% load martortags %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row section">
+        <div class="col-12">
+            <div class="jumbotron" style="background-image: url({{featured.banner.url}});background-size:cover;">
+                <div class="jumbo-text">
+                    <h6 class="card-subtitle mb-2 text-muted"><code>Featured</code></h6>
+                    <h1 class="display-4"><a href="{% url 'tutorials:series' featured.id %}">{{featured.title}}</a></h1>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                    {% for a in featured.author_list.all %}
+                        <a href="{% url 'people:person' a.id %}">{{ a.full_name }}</a>
+                    {% endfor %}
+                    </h6>
+                    <p class="lead">{{featured.desc|safe_markdown}}</p>
+                    <hr></hr>
+                    <div class="row">
+                    {% for e in featured.episode_list.all %}
+                        <div class="col-md-6 episode-list"><code>Episode {{forloop.counter}}: <a href="{% url 'tutorials:module' e.id %}">{{e}}</code></a></div>
+                    {% endfor %}
+                    </div>
+                    <hr></hr>
+                    <ul class="skillsoft">
+                        <li>Skills: {% for sk in featured.skill_list.all %}
+                            <a href="#">{{sk}}</a>
+                        {% endfor %}</li>
+                        <li>Software: {% for so in featured.software_list.all %}
+                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="{{so.desc}}">{{so}}</a>
+                        {% endfor %}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row section">
+        <div class="col-12">
+            <h1>{% if tutorials_meta.series_name %}{{tutorials_meta.series_name}}{% else %}Series{% endif %}</h1>
+            <p>{% if tutorials_meta.series_desc %}{{tutorials_meta.series_desc|safe_markdown}}{% else %}A description of the series.{% endif %}</p>
+            <form method="get">
+                {{serieses.form.as_table}}
+                <input type ="submit"/>
+            </form>
+            <hr></hr>
+        </div>
+    </div>
+    <div class="row section">
+        <div class="col-12">
+            {% if serieses.qs %}
+                {% for s in serieses.qs %}
+                <div class="card card-left mb-3">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            <img class="card-img-top" src="{{s.banner.url}}" alt="Card image cap">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="{% url 'tutorials:series' s.id%}">{{s.title}}</a></h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                {% for a in s.author_list.all %}
+                                    <a href="{% url 'people:person' a.id %}">{{ a.full_name }}</a>
+                                {% endfor %}
+                                <hr>
+                                <p>{{s.desc|safe_markdown|truncatewords:15}}</p>
+                                {% for e in s.episode_list.all %}
+                                    <span class="episode-list"><code>Episode {{forloop.counter}}: <a href="{% url 'tutorials:module' e.id %}">{{e}}</code></a></span>
+                                {% endfor %}
+                                </h6>
+                                <hr>
+                                <ul class="skillsoft">
+                                    <li>
+                                        Skills: {% for sk in s.skill_list.all %}
+                                            <a href="#">{{sk}}</a>
+                                        {% endfor %}
+                                    </li>
+                                    <li>
+                                        Software: {% for so in s.software_list.all %}
+                                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="{{so.desc}}">{{so}}</a>
+                                        {% endfor %}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No tutorials.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

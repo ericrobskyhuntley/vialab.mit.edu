@@ -1,0 +1,63 @@
+{% extends "main/base.html" %}
+{% load martortags %}
+{% load icons %}
+{% block content %}
+
+<div class="container">
+    <div class="row section">
+        <div class="card card-left mb-3">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <img class="card-img-top" src="{{person.photo.url}}" alt="Card image cap"></a>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ person.full_name }}{% if person.terminal_degree %}, {{person.terminal_degree}}{% endif %}</h2>
+                        <h4 class="card-subtitle">{{ person.get_title_display }}</h4>
+                        <hr></hr>
+                        <ul class="list-unstyled">
+                        {% if person.email %}
+                            <li><a href="mailto:{{ person.email }}"><code>{{person.email}}</code></a></li>
+                        {% endif %}
+                        {% if person.website %}
+                            <li><a href="{{person.website}}"><code>{{ person.website }}</code></a></li>
+                        {% endif %}
+                        {% if person.pronouns %}
+                            <li>{{ person.get_pronouns_display}}*</li>
+                        {% endif %}
+                        </ul>
+                        <hr></hr>
+                        {% for a in person.affiliation_set.all %}
+                            <ul class="list-unstyled">
+                                <li><a href="{{a.website}}">{{a.title}}</a></li>
+                                <li>{{a.institution.dept}}, {{a.institution.inst}}, {{a.institution.city}}, {{a.institution.state}} {{a.institution.postal_code}}</li>
+                            </ul>
+                        {% endfor %}
+                        <hr></hr>
+                        {% if person.orcid %}
+                            <span><a href="https://orcid.org/{{ person.orcid }}"><i class="ai ai-orcid"></i></a></span>
+                        {% endif %}
+                        {% if person.zotero %}
+                            <span><a href="http://zotero.com/{{ person.zotero }}"><i class="ai ai-zotero"></i></a></span>
+                        {% endif %}
+                        {% if person.twitter %}
+                            <span><a href="https://twitter.com/{{person.twitter}}"><i class="fab fa-twitter"></i></a></span>
+                        {% endif %}
+                        {% if person.linkedin %}
+                            <span><a href="https://linkedin.com/in/{{ person.linkedin }}"><i class="fab fa-linkedin"></i></a></span>
+                        {% endif %}
+                        {% if person.gitlab %}
+                            <span><a href="https://gitlab.com/{{ person.gitlab }}"><i class="fab fa-gitlab"></i></a></span>
+                        {% endif %}
+                        {% if person.github %}
+                            <span><a href="https://github.com/{{ person.github }}"><i class="fab fa-github"></i></a></span>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

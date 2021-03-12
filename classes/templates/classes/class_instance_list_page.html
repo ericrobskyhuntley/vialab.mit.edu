@@ -1,0 +1,31 @@
+{% load el_pagination_tags %}
+{% load martortags %}
+
+{% paginate class_list %}
+{% for c in class_list %}<div class="card {% if c.cancel %}cancel{% endif %}">
+<div class="card-segment">
+    {% if c.banner %}
+        <a href="{% url 'classes:class_instance' c.slug %}"><div class="card-img"><div style="background-image:url({{c.banner.url}})"></div></div></a>
+    {% endif %}
+    <h4 class="supertitle">{{c.semester.get_semester_display}} {{c.semester.year}} | {% if c.dept_site %}<a href="{{ c.dept_site }}">{{c.cl.institution.short}}</a>{% else %}{{c.cl.institution.short}}{% endif %}</h4>
+    <h2 class="card-segment-head"><a href="{% url 'classes:class_instance' c.slug %}">{{c.cl.title}}</a></h2>
+    <hr>
+    {% for i in c.instructors.all %}
+        <h4><a href="{% url 'people:person' i.slug %}">{{ i.full_name }}</a></h4>
+    {% endfor %}
+    {% if c.desc %}
+        {{ c.desc|safe_markdown|truncatewords:15 }}
+    {% endif %}
+    <div class="card-button-list">
+        <ul>
+            {% if c.canvas %}
+                <a href="{{c.canvas}}"><li>Canvas ></li></a>
+            {% endif %}
+            {% if c.syllabus %}
+                <a href="{{ c.syllabus }}"><li>Syllabus ></li></a>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+</div>{% endfor %}
+{% show_more %}

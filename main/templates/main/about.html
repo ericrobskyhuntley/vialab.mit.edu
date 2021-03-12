@@ -1,0 +1,9 @@
+{% extends "main/base.html" %}
+{% load martortags %}
+
+{% block content %}
+<div id="global-subtitle" class="card feature-text"><p>About</p></div>
+<div class="long-content">
+    {{about.about|safe_markdown}}
+</div>
+{% endblock %}

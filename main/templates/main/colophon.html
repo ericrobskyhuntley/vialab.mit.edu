@@ -1,0 +1,9 @@
+{% extends "main/base.html" %}
+{% load martortags %}
+
+{% block content %}
+<div id="global-subtitle" class="card feature-text"><p>{{ site_data.colophon_name }}</p></div>
+<div class="long-content">
+    {{ site_data.colophon|safe_markdown }}
+</div>
+{% endblock %}

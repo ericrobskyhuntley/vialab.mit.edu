@@ -1,0 +1,68 @@
+{% extends "main/base.html" %}
+{% load martortags %}
+
+{% block content %}
+{% if site_data.short_desc %}
+    <div class="feature-text">
+        <p>
+            {{ site_data.short_desc }}
+        </p>
+    </div>
+{% endif %}
+
+<div class="card-array">
+    <div class="card">
+        <div class="card-segment">
+            <h2>Current & Upcoming Classes</h2>
+            <hr>
+            {% for class in current_upcoming %}
+                <div class="list-block">
+                    <!-- Class Title -->
+                    {% if class.cl.title %}
+                        <a href="{% url 'classes:class_instance' class.slug %}"><h3>{{class.cl.title}}</h3></a>
+                    {% endif %}
+                    <!-- Class Semester -->
+                    {% if class.semester %}
+                        <h4>
+                            {{class.semester.get_semester_display}} {{class.semester.year}} | {% if class.dept_site %}<a href="{{ class.dept_site }}">{{class.cl.institution.short}}</a>{% else %}{{class.cl.institution.short}}{% endif %}
+                            {% if class.sessions %}
+                                <br>{% for s in class.sessions.all %}
+                                    {% for d in s.days.all %} 
+                                        {{d.abbrev}} 
+                                    {% endfor %}
+                                    {{s.start|time:"g:i"}}-{{s.end|time:"g:i"}} ({{s.session_type.first.get_form_display}})
+                                {% endfor %}
+                            {% endif %}
+                        </h4>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <hr>
+            <h4><a href="{% url 'classes:classes' %}">See all classes.</a></h4>
+        </div>
+    </div><div class="card">
+        <div class="card-segment">
+            <h2>Upcoming Events</h2>
+            <hr>
+            {% if upcoming_events %}
+                {% for event in upcoming_events%}
+                <div class="list-block">
+                    <h3><a href="{% url 'cal:event_detail' event.slug %}">{{event.title}}</a></h3>
+                    {% if event.day %}
+                        <h4>
+                        {{event.day | date:"D M j" }}{% if event.start %}, {{event.start | time:"g:i"}}{% if event.end %}–{{event.end | time:"g:i"}}{% endif %}{% endif %}
+                        </h4>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            {% else %}
+                No upcoming events.
+            {% endif %}
+            <hr>
+            <div class="event">
+                <h4><a href="{% url 'cal:calendar' %}">See all events.</a></h4>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

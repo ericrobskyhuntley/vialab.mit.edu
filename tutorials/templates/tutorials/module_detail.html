@@ -1,0 +1,96 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% load martortags %}
+{% block content %}
+
+{% if module %}
+{% if module.banner %}
+<div class="hero" style="background-image: url({{module.banner.url}});">
+{% else %}
+<div class="hero" style="box-shadow:none;">
+{% endif %}
+  <div class="long-title card hawt">
+    <div class="card-segment">
+        <h1 id="title">{{ module.title }}</h1>
+        <hr>
+        <div class="instructors">
+        {% for a in module.author.all %}
+        {% if a.photo %}
+        <div class="instructor-xs-photo">
+            <a href="{% url 'people:person' a.slug %}"><img src="{{ a.photo.url }}"/></a>
+        </div>{% endif %}<div class="instructor-info">
+            <ul>
+                {% if a.full_name %}<li><h3><a href="{% url 'people:person' a.slug %}">{{ a.full_name }}{% if a.cred == 'PhD' %}, {{a.cred}} {% endif %}{% endif %}
+                {% if a.pronouns %}({{ a.get_pronouns_display }}){% else %}{% endif %}</li></a></h3>
+                {% if a.affiliation.first.title %}<li>{{ a.affiliation.first.title }}</li>{% endif %}
+                {% if a.email %}<li><a href="mailto:{{ a.email }}">{{ a.email }}</a>{% endif %}
+            </ul>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+  </div>
+</div>
+<div class="card-array"> 
+  <div class="sidebyside card hawt">
+      <div class="card-segment">
+          <h2 class="card-segment-head">
+              Tutorial Information
+          </h2>
+          <hr>
+          <div class="card-segment-body">
+              {% if module.series.all %}
+                  <ul class="list-unstyled">
+                  {% for s in module.episode_set.all %}
+                    <li>Module {{s.number}} in {{s.series.title}}.</li>
+                  {% endfor %}
+                  </ul>
+              {% endif %}
+          </div>
+          <div class="card-button-list">
+              <ul>
+                  {% if module.materials %}
+                  <a href="{{ module.materials }}"><li>Download Materials ></li></a>
+                  {% endif %}
+              </ul>
+          </div>
+      </div>
+  </div><div class="sidebyside card hawt">
+      <div class="card-segment">
+          <h2 class="card-segment-head">
+              Methods
+          </h2>
+          <hr>
+          <div class="card-segment-body">
+              {% if module.skills %}
+                  {% for s in module.skills.all %}
+                      {{ s.name }}
+                  {% endfor %}
+              {% endif %}
+          </div>
+          <h2 class="card-segment-head">
+              Tools
+          </h2>
+          <hr>
+          <div class="card-segment-body">
+          {% if module.software %}
+              {% for s in module.software.all %}
+                  {{ s.name }}
+              {% endfor %}
+          {% endif %}
+          </div>
+      </div>
+  </div>
+</div>
+<div class="row section">
+  <div class="long-content">
+  {{module.body|safe_markdown}}
+  </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block js %}
+{% comment %} Read in Martor parser. {% endcomment %}
+<script src="{% static 'moduleParse.bundle.js' %}"></script>
+{% endblock %}

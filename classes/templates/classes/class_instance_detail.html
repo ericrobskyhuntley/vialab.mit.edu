@@ -1,0 +1,107 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% load martortags %}
+{% block content %}
+
+{% if class_instance %}
+{% if class_instance.banner %}
+<div class="hero" style="background-image: url({{class_instance.banner.url}});">
+{% else %}
+<div class="hero" style="box-shadow:none;">
+{% endif %}
+      <div class="long-title card hawt">
+        <div class="card-segment">
+            <div id="supertitle">
+                {{class_instance.cl.number }} | {{ class_instance.semester }}
+            </div>
+            <h1 id="title">{{ class_instance.cl.title }}</h1>
+            <h4 id="subtitle">
+            {% if class_instance.cl.institution %}<a href="{{ class_instance.dept_site }}">{{class_instance.cl.institution.dept}}, {{class_instance.cl.institution.inst}}</a>{% endif %}
+            </h4>
+            <hr>
+            <div class="instructors">
+                    {% for i in class_instance.instructors.all %}<div class="instructor"><div class="instructor-xs-photo">
+                            {% if i.photo %}
+                                <a href="{% url 'people:person' i.slug %}"><img src="{{ i.photo.url }}"/></a>
+                            {% endif %}
+                        </div><div class="instructor-info">
+                            <ul>
+                                {% if i.full_name %}<li><h3><a href="{% url 'people:person' i.slug %}">{{ i.full_name }}{% if i.cred == 'PhD' %}, {{i.cred}} {% endif %}{% endif %}
+                                {% if i.pronouns %}({{ i.get_pronouns_display }}){% else %}{% endif %}</li></a></h3>
+                                {% if i.affiliation.first.title %}<li>{{ i.affiliation.first.title }}</li>{% endif %}
+                                {% if i.email %}<li><a href="mailto:{{ i.email }}">{{ i.email }}</a>{% endif %}
+                            </ul>
+                        </div>
+                    </div>{% endfor %}
+                </div>
+        </div>
+    </div>
+</div>
+<div class="card-array"> 
+    <div class="sidebyside card hawt">
+        <div class="card-segment">
+            <h2 class="card-segment-head">
+                Class Information
+            </h2>
+            <hr>
+            <div class="card-segment-body">
+                {% if class_instance.sessions %}
+                {% for s in class_instance.sessions.all %}
+                    {% for d in s.days.all %} 
+                        {{d.abbrev}} 
+                    {% endfor %}
+                    {{s.start|time:"g:i"}}-{{s.end|time:"g:i"}} ({{s.session_type.first.get_form_display}})
+                {% endfor %}
+                {% endif %}
+                <div id="eligibility"><span {% if not class_instance.cl.ug %}class="ineligible"{% endif %}>Undergrad </span> | <span {% if not class_instance.cl.grad %}class="ineligible"{% endif %}>Graduate</span></div>
+                <div id="units">{% if class_instance.cl.units %} {{class_instance.cl.units}} Units {% endif %}</div>
+                <div class="card-button-list">
+                    <ul id="class-links">
+                        {% if class_instance.canvas %}<br>
+                        <a href="{{ class_instance.canvas }}"><li>Canvas Site ></li></a>
+                        {% endif %}
+                        {% if class_instance.dept_site %}
+                        <a href="{{ class_instance.dept_site }}"><li>Department Page ></li></a>
+                        {% endif %}
+                        {% if class_instance.syllabus %}
+                        <a href="{{class_instance.syllabus.url}}"><li>Syllabus ></li></a>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div><div class="sidebyside card hawt">
+        <div class="card-segment">
+            <h2 class="card-segment-head">
+                Methods
+            </h2>
+            <hr>
+            <div class="card-segment-body">
+                {% if class_instance.skills %}
+                    {% for s in class_instance.skills.all %}
+                        {{ s.name }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <h2 class="card-segment-head">
+                Tools
+            </h2>
+            <hr>
+            <div class="card-segment-body">
+                {% if class_instance.software %}
+                    {% for s in class_instance.software.all %}
+                        {{ s.name }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% if class_instance.desc %}
+<div class="long-content">
+    {{ class_instance.desc|safe_markdown }}
+    <hr>
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}

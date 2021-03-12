@@ -1,0 +1,85 @@
+{% extends "main/base.html" %}
+{% load martortags %}
+{% block content %}
+
+<div class="container">
+<div class="row section">
+  <div class="col-12">
+    <div class="jumbotron" style="background-image: url({{series.banner.url}});background-size:cover;">
+      <div class="jumbo-text">
+        <h1 class="display-4">{{series.title}}</h1>
+        <h6 class="card-subtitle mb-2 text-muted">
+        {% comment %} {% for a in series.author_list.all %}
+            <a href="{% url 'people:person' a.id %}">{{ a.full_name }}</a>
+        {% endfor %} {% endcomment %}
+        </h6>
+        <p class="lead">{{series.desc|safe_markdown}}</p>
+        <hr class="my-4">
+        <ul class="skillsoft">
+          <li>Skills: {% for sk in series.skill_list.all %}
+              <a href="#">{{sk}}</a>
+          {% endfor %}</li>
+          <li>Software: {% for so in series.software_list.all %}
+              <a href="#" data-toggle="tooltip" data-placement="bottom" title="{{so.desc}}">{{so}}</a>
+          {% endfor %}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="row section">
+    <div class="col-12">
+      {% for episode in series.episode_list %}
+        <div class="card card-left mb-3">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img class="card-img" src="{{episode.banner.url}}" alt="Card image cap">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted"><code>{{tutorials_meta.episode_name}} {{episode.episode_set.all.first.number}}</code></h6>
+                <h5 class="card-title"><a href="{% url 'tutorials:module' episode.id %}">{{episode.title}}</a></h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                {% for a in episode.author_list.all %}
+                    <a href="{% url 'people:person' a.id %}">{{ a.full_name }}</a>
+                {% endfor %}
+                </h6>
+                <hr>
+                <p class="card-text">{{episode.desc|safe_markdown|truncatewords:12}}</p>
+                <hr>
+                <ul class="skillsoft">
+                  <li>Skills: {% for sk in episode.skill_list.all %}
+                      <a href="#">{{sk}}</a>
+                  {% endfor %}</li>
+                  <li>Software: {% for so in episode.software_list.all %}
+                      <a href="#" data-toggle="tooltip" data-placement="bottom" title="{{so.desc}}">{{so}}</a>
+                  {% endfor %}</li>
+                  {% if episode.readings %}
+                  <li><a href="{% url 'reading:reading_list' episode.readings.id %}">Reading List</a></li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+
+{% for author in series.author_list.all %}
+  <img class="author-photo" src="{{ author.photo.url }}"/><br>
+  <ul class="list-unstyled">
+    <li><a href="{% url 'people:person' author.id %}">{{ author.full_name }}</a></li>
+    <li><code><a href="mailto:{{ author.email }}">{{ author.email }}</a></code></li>
+    <li>{{ author.get_pronouns_display }}.<a href="https://uwm.edu/lgbtrc/support/gender-pronouns/">*</a></li>
+    <hr>
+    <li>{{ author.bio|safe_markdown|truncatewords:12 }}</li>
+  </ul>
+  {% endfor %}
+
+{% endblock %}

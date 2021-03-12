@@ -1,0 +1,39 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="feature-text"><p>Tutorials</p></div>
+    <div class="selectors"> 
+        <form method="get" onchange="this.submit()">
+            <div class="card-array"> 
+                <div class="selector card">
+                    <div class="card-segment">{{ modules.form.software }}</div>
+                </div>
+                <div class="selector card">
+                    <div class="card-segment">{{ modules.form.skills }}</div>
+                </div>
+            </div>
+        </form>
+    </div>
+    {% if modules.qs %}
+    <div class="card-array"> 
+        {% include page_template %}
+    </div>
+{% else %}
+<div class="long-content">
+    No matching tutorials.
+</div>
+{% endif %}
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="{% static 'el-pagination/js/el-pagination.js'%}"></script>
+    <script>
+        $.endlessPaginate({
+            paginateOnScroll: true,
+            paginateOnScrollMargin: 200
+        });
+    </script>
+{% endblock %}

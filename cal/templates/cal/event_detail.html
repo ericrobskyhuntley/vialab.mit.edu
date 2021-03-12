@@ -1,0 +1,94 @@
+{% extends "main/base.html" %}
+{% load martortags %}
+
+{% block content %}
+{% if event_detail.banner %}
+    <div class="hero" style="background-image: url({{event_detail.banner.url}});">
+{% elif event_detail.module.banner %}
+    <div class="hero" style="background-image: url({{event_detail.module.banner.url}});">
+{% else %}
+    <div class="hero" style="box-shadow:none;">
+{% endif %}
+    <div class="long-title card hawt">
+        <div class="card-segment">
+            <div id="supertitle">
+                {{ event_detail.semester }}
+            </div>
+            <h1 id="title">{{ event_detail.title }}</h1>
+            <hr>
+            <div class="instructors">
+                {% for i in event_detail.role_set.all %}<div class="instructor">
+                    <div class="instructor-xs-photo">
+                        {% if i.participant.photo %}
+                            <a href="{% url 'people:person' i.participant.slug %}"><img src="{{ i.participant.photo.url }}"/></a>
+                        {% endif %}
+                    </div><div class="instructor-info">
+                        <ul>
+                            {% if i.participant.full_name %}<li><h3><a href="{% url 'people:person' i.participant.slug %}">{{ i.participant.full_name }}{% if i.participant.cred == 'PhD' %}, {{i.participant.cred}} {% endif %}{% endif %}
+                            {% if i.participant.pronouns %}({{ i.participant.get_pronouns_display }}){% else %}{% endif %}</li></a></h3>
+                            {% if i.participant.affiliation.first.title %}<li>{{ i.participant.affiliation.first.title }}</li>{% endif %}
+                            {% if i.participant.email %}<li><a href="mailto:{{ i.participant.email }}">{{ i.participant.email }}</a>{% endif %}
+                        </ul>
+                    </div>
+                </div>{% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card-array"> 
+    <div class="sidebyside card hawt">
+        <div class="card-segment">
+            <h2 class="card-segment-head">
+                Event Information
+            </h2>
+            <hr>
+            <div class="card-segment-body">
+                {% if event_detail.day %}
+                    <h4>{{event_detail.day | date:"D M j" }}{% if event_detail.start %}, {{event_detail.start | time:"g:i"}}{% if event_detail.end %}–{{event_detail.end | time:"g:i"}}{% endif %}{% endif %}</h4>
+                {% endif %}
+                <div class="card-button-list">
+                    <ul>
+                        {% if event_detail.module %}<br>
+                        <a href="{% url 'tutorials:module' event_detail.module.slug %}"><li>View Module ></li></a>
+                        {% endif %}
+                        {% if event_detail.virtual_url %}
+                        <a href="{{ event_detail.virtual_url }}"><li>Join Virtual Event ></li></a>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div><div class="sidebyside card hawt">
+        <div class="card-segment">
+            <h2 class="card-segment-head">
+                Methods
+            </h2>
+            <hr>
+            <div class="card-segment-body">
+                {% if event_detail.module.skills %}
+                    {% for s in event_detail.module.skills.all %}
+                        {{ s.name }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <h2 class="card-segment-head">
+                Tools
+            </h2>
+            <hr>
+            <div class="card-segment-body">
+                {% if event_detail.module.software %}
+                    {% for s in event_detail.module.software.all %}
+                        {{ s.name }}
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% if event_detail.desc %}
+<div class="long-content">
+    {{ event_detail.desc|safe_markdown }}
+    <hr>
+</div>
+{% endif %}
+{% endblock %}
