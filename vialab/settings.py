@@ -147,6 +147,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'node_modules', '@fortawesome', 'fontawesome-free'),
+)
+
+
 # MARKDOWNX_MARKDOWN_EXTENSIONS = [
 #     'markdown.extensions.extra',
 #     'markdown.extensions.codehilite',
