@@ -2,6 +2,7 @@ from django.db import models
 from martor.models import MartorField
 from simple_history.models import HistoricalRecords
 from people.models import Person, Institution
+import time
 
 def vid_filename(instance, filename):
     path = 'videos'
