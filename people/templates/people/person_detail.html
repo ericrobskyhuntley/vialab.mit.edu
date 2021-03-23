@@ -4,20 +4,29 @@
 
 {% block content %}
 {% if person.photo %}
-    <div class="hero card" style="background-image:url({{person.photo.url}});">
+<div class="hero" style="background-image:url({{person.photo.url}});">
 {% else %}
-    <div class="hero card" style="box-shadow:none;">
+<div class="hero" style="box-shadow:none;">
 {% endif %}
     <div class="long-title card hawt">
-    <h1 id="title">{{ person.full_name }}{% if person.cred == 'PhD' %}, {{person.cred}} {% endif %}</h1>
-    <h4>{{ person.get_title_display }}, VIA Learning Lab</h4>
-    {% if person.pronouns %}
-        <h4>{{ person.get_pronouns_display}}*
-    {% endif %}
-    <hr>
-    {% if person.email %}
-        <a href="mailto:{{ person.email }}"><code>{{person.email}}</code></a></h4>
-    {% endif %}
+        <div class="card-segment person-details">
+            <div class="md-photo">
+                {% if person.photo %}
+                    <img src="{{ person.photo.url}}"/>  
+                {% endif %}
+            </div>
+            <div class="person-info">
+            <h1 id="title">{{ person.full_name }}{% if person.cred == 'PhD' %}, {{person.cred}} {% endif %}</h1>
+            <h4 id="subtitle">{{ person.get_title_display }}, VIA Learning Lab</h4>
+            {% if person.pronouns %}
+                <h4>{{ person.get_pronouns_display}}*
+            {% endif %}
+            <hr>
+            {% if person.email %}
+                <a href="mailto:{{ person.email }}"><code>{{person.email}}</code></a></h4>
+            {% endif %}
+            </div>
+        </div>
     </div>
 </div>
 <div class="card-array"> 

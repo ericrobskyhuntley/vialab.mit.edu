@@ -112,9 +112,30 @@ html, body {
     width: 15%;
     display: inline-block;
 }
+
 .instructor-xs-photo img {
     border-bottom: 2px solid white;
     border-right: 2px solid white;
+}
+
+.instructor-md-photo img {
+    border-bottom: 2px solid white;
+    border-right: 2px solid white;
+}
+
+.person-details {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap:wrap;
+}
+
+.md-photo {
+    /* width: 25%; */
+    flex: 0 1 30%;
+}
+
+.person-info {
+    flex: 0 1 60%;
 }
 
 .instructor-info {
@@ -537,5 +558,13 @@ select:hover {
         box-shadow: none;
         border-bottom: white 2px solid;
         border-right:  none;
+    }
+    .md-photo {
+        /* width: 25%; */
+        flex: 0 1 100%;
+    }
+    
+    .person-info {
+        flex: 0 1 100%;
     }
 }
