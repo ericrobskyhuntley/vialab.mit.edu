@@ -19,6 +19,7 @@ class MainMetadata(models.Model):
     about = MartorField(max_length=2000, blank=False)
     address = MartorField(max_length=2000, blank=False)
     email = models.EmailField(blank=True, default='')
+    accessibility_url = models.URLField(blank=True, default='https://web.mit.edu/accessibility/')
     twitter = models.CharField(max_length=50, blank=True, default='')
     gitlab = models.CharField(max_length=25, blank=True, default='')
     github = models.CharField(max_length=25, blank=True, default='')
