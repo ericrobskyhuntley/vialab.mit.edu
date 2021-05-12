@@ -16,7 +16,7 @@
         {% if l.banner %}
             <a href="{% url 'reading:reading_list_detail' l.slug %}"><div class="card-img"><div style="background-image:url({{l.banner.url}})"></div></div></a>
         {% endif %}
-        <h4 class="supertitle">{{l.modified_at.date}}</h4>
+        <h4 class="supertitle">{{l.created_at.date}}</h4>
         <h2 class="card-segment-head"><a href="{% url 'reading:reading_list_detail' l.slug %}">{{l.title}}</a></h2>
         <hr>
         {% for i in l.author.all %}
