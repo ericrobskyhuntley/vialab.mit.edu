@@ -17,8 +17,9 @@ html, body {
 }
 
 #video {
-    z-index:0;
+    /* z-index:0; */
     overflow: hidden;
+    /* background-color: #fff; */
 }
 
 video {
@@ -30,15 +31,16 @@ video {
     left: 50%; /* % of surrounding element */
     top: 50%;
     transform: translate(-50%, -50%); /* % of current element */
+    background-color: #fff;
 }
   
 .gradient {
     background: linear-gradient(290deg, rgb(216, 16, 126), rgb(57, 186, 150));
-    z-index: 2;
 }
 
 .multiply {
     mix-blend-mode:multiply;
+    z-index: 20;
 }
 
 #p5 {
