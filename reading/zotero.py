@@ -5,13 +5,17 @@ def fetch_list(library_id, library_type, collection_key, api_key, csl):
     collections = zot.collections_top()
     data = {}
     if collection_key:
-        data = {'contents': zot.collection_items_top(
+        data = {'ref_list': zot.collection_items_top(
             collection_key,
             content = 'bib', 
             style = csl, 
             sort = 'creator',
             direction = 'asc',
             linkwrap=1
+            ), 'metadata':  zot.collection_items_top(
+            collection_key,
+            sort = 'creator',
+            direction = 'asc'
             )
         }
     else:

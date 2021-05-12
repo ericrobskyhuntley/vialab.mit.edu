@@ -9,7 +9,7 @@
 {% else %}
 <div class="hero" style="box-shadow:none;">
 {% endif %}
-      <div class="long-title card hawt">
+    <div class="long-title card gradient">
         <div class="card-segment">
             <div id="supertitle">
                 {{class_instance.cl.number }} | {{ class_instance.semester }}
@@ -20,20 +20,20 @@
             </h4>
             <hr>
             <div class="instructors">
-                    {% for i in class_instance.instructors.all %}<div class="instructor"><div class="instructor-xs-photo">
-                            {% if i.photo %}
-                                <a href="{% url 'people:person' i.slug %}"><img src="{{ i.photo.url }}"/></a>
-                            {% endif %}
-                        </div><div class="instructor-info">
-                            <ul>
-                                {% if i.full_name %}<li><h3><a href="{% url 'people:person' i.slug %}">{{ i.full_name }}{% if i.cred == 'PhD' %}, {{i.cred}} {% endif %}{% endif %}
-                                {% if i.pronouns %}({{ i.get_pronouns_display }}){% else %}{% endif %}</li></a></h3>
-                                {% if i.affiliation.first.title %}<li>{{ i.affiliation.first.title }}</li>{% endif %}
-                                {% if i.email %}<li><a href="mailto:{{ i.email }}">{{ i.email }}</a>{% endif %}
-                            </ul>
-                        </div>
-                    </div>{% endfor %}
-                </div>
+                {% for i in class_instance.instructors.all %}<div class="instructor"><div class="instructor-xs-photo">
+                        {% if i.photo %}
+                            <a href="{% url 'people:person' i.slug %}"><img src="{{ i.photo.url }}"/></a>
+                        {% endif %}
+                    </div><div class="instructor-info">
+                        <ul>
+                            {% if i.full_name %}<li><h3><a href="{% url 'people:person' i.slug %}">{{ i.full_name }}{% if i.cred == 'PhD' %}, {{i.cred}} {% endif %}{% endif %}
+                            {% if i.pronouns %}({{ i.get_pronouns_display }}){% else %}{% endif %}</li></a></h3>
+                            {% if i.affiliation.first.title %}<li>{{ i.affiliation.first.title }}</li>{% endif %}
+                            {% if i.email %}<li><a href="mailto:{{ i.email }}">{{ i.email }}</a>{% endif %}
+                        </ul>
+                    </div>
+                </div>{% endfor %}
+            </div>
         </div>
     </div>
 </div>

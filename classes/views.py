@@ -10,14 +10,14 @@ class ClassesListView(AjaxListView):
     page_template = 'classes/class_instance_list_page.html'
 
     def get_queryset(self):
-        """Return the last ten published posts."""
+        """Return classes that are currently running."""
         today = date.today()
         classes = ClassInstance.objects.select_related(
             'cl__institution'
         ).select_related(
             'semester'
         ).filter(
-                semester__end__lt=today
+            semester__end__lt=today
         ).prefetch_related(
             'sessions'
         ).order_by('-semester__start')

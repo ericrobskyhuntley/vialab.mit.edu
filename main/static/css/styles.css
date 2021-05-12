@@ -31,9 +31,12 @@ video {
     transform: translate(-50%, -50%); /* % of current element */
 }
   
-#gradient {
+.gradient {
     background: linear-gradient(290deg, rgb(216, 16, 126), rgb(57, 186, 150));
     z-index: 2;
+}
+
+.multiply {
     mix-blend-mode:multiply;
 }
 
@@ -284,6 +287,10 @@ a {
     text-decoration: underline;
 }
 
+.long-content hr {
+    border-top: 1px solid rgb(216, 16, 126);
+}
+
 .long-title.card {
     display:block;
     /* padding: 0.1em 1.5rem 0.1rem 1.5rem; */
@@ -396,8 +403,8 @@ hr {
 .hero .long-title {
     margin: 3rem 3rem 3rem 1.5rem;
     min-width:80%;
-    border-top: 0.5px dashed white;
-    border-left: 0.5px dashed white;
+    /* border-top: 0.5px dashed white; */
+    /* border-left: 0.5px dashed white; */
 }
 
 .ineligible {
@@ -436,6 +443,17 @@ select:hover {
 
 .list-block {
     margin-bottom: 0.5rem;
+}
+
+.csl-entry {
+    padding-left: 1.5rem;
+    text-indent:-1.5rem;
+}
+
+.csl-desc {
+    padding: 1rem 0rem 1rem 1.5rem;
+    font-style: italic;
+    /* text-indent:-1.5em; */
 }
 
 @media screen and (max-height: 600px) {

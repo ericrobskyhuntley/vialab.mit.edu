@@ -1,0 +1,51 @@
+{% extends "main/base.html" %}
+{% load martortags %}
+{% load static %}
+
+{% block content %}
+
+<div class="feature-text"><p>Reading Lists</p></div>
+
+{% if reading_meta %}
+    <p>{{reading_meta.desc}}</p>
+{% endif %}
+
+<div class="card-array"> 
+    {% for l in reading_lists %}<div class="card {% if c.cancel %}cancel{% endif %}">
+    <div class="card-segment">
+        {% if l.banner %}
+            <a href="{% url 'reading:reading_list_detail' l.slug %}"><div class="card-img"><div style="background-image:url({{l.banner.url}})"></div></div></a>
+        {% endif %}
+        <h4 class="supertitle">{{l.modified_at.date}}</h4>
+        <h2 class="card-segment-head"><a href="{% url 'reading:reading_list_detail' l.slug %}">{{l.title}}</a></h2>
+        <hr>
+        {% for i in l.author.all %}
+            <h4><a href="{% url 'people:person' i.slug %}">{{ i.full_name }}</a></h4>
+        {% endfor %}
+        {% if l.desc %}
+            {{ l.desc|safe_markdown|truncatewords:15 }}
+        {% endif %}
+        <div class="card-button-list">
+            <ul>
+                {% if l.zotero_url %}
+                    <a href="{{l.zotero_url}}"><li>Open in Zotero ></li></a>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    </div>{% endfor %}
+</div>
+
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="{% static 'el-pagination/js/el-pagination.js'%}"></script>
+    <script>
+        $.endlessPaginate({
+            paginateOnScroll: true,
+            paginateOnScrollMargin: 200
+        });
+    </script>
+{% endblock %}

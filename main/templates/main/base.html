@@ -44,10 +44,10 @@
               <ul id="navlist">
                   <li><a href="{% url 'tutorials:modules' %}">Tutorials</a></li>
                   <li><a href="{% url 'cal:calendar' %}">Calendar</a></li>
+                  <li><a href="{% url 'reading:reading_lists' %}">Reading Lists</a></li>
                   <li><a href="{% url 'classes:classes' %}">Classes</a></li>
                   <hr>
                   <li><a href="{% url 'main:about'%}" >About</a></li>
-                  <li><a href="{% url 'main:contact'%}">Contact</a></li>
                   <li><a href="{% url 'main:colophon'%}">Colophon</a></li>
                   <hr>
                   <li><a href="{{site_data.accessibility_url}}"  target="_blank">Accessibility</a></li>
@@ -93,7 +93,7 @@
     <div id="content-col">
       {% block content %}{% endblock %}
     </div>
-    <div class="background" id="gradient"></div>
+    <div class="background gradient multiply"></div>
     <div class="background" id="video">
       <video muted="1" loop="1" autoplay="1">
         <source type="video/mp4" src="{{site_data.feature_vid.url}}"
